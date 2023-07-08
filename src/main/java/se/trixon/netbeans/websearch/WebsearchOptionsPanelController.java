@@ -29,17 +29,23 @@ import org.openide.util.Lookup;
         keywordsCategory = "Advanced/Websearch"
 )
 @org.openide.util.NbBundle.Messages({"AdvancedOption_DisplayName_Websearch=Web search", "AdvancedOption_Keywords_Websearch=url"})
+/**
+ *
+ * @author Patrik Karlström <patrik@trixon.se>
+ */
 public final class WebsearchOptionsPanelController extends OptionsPanelController {
+
+    private boolean changed;
 
     private WebsearchPanel panel;
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private boolean changed;
 
-    public void update() {
-        getPanel().load();
-        changed = false;
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public void applyChanges() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -50,39 +56,40 @@ public final class WebsearchOptionsPanelController extends OptionsPanelControlle
         });
     }
 
+    @Override
     public void cancel() {
         // need not do anything special, if no changes have been persisted yet
     }
 
-    public boolean isValid() {
-        return getPanel().valid();
-    }
-
-    public boolean isChanged() {
-        return changed;
-    }
-
-    public HelpCtx getHelpCtx() {
-        return null; // new HelpCtx("...ID") if you have a help set
-    }
-
+    @Override
     public JComponent getComponent(Lookup masterLookup) {
         return getPanel();
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
+    @Override
+    public HelpCtx getHelpCtx() {
+        return null; // new HelpCtx("...ID") if you have a help set
     }
 
+    @Override
+    public boolean isChanged() {
+        return changed;
+    }
+
+    @Override
+    public boolean isValid() {
+        return getPanel().valid();
+    }
+
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
-    private WebsearchPanel getPanel() {
-        if (panel == null) {
-            panel = new WebsearchPanel(this);
-        }
-        return panel;
+    @Override
+    public void update() {
+        getPanel().load();
+        changed = false;
     }
 
     void changed() {
@@ -91,6 +98,13 @@ public final class WebsearchOptionsPanelController extends OptionsPanelControlle
             pcs.firePropertyChange(OptionsPanelController.PROP_CHANGED, false, true);
         }
         pcs.firePropertyChange(OptionsPanelController.PROP_VALID, null, null);
+    }
+
+    private WebsearchPanel getPanel() {
+        if (panel == null) {
+            panel = new WebsearchPanel(this);
+        }
+        return panel;
     }
 
 }

@@ -25,7 +25,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
-import java.time.LocalTime;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -43,15 +42,19 @@ import org.openide.util.NbBundle.Messages;
         displayName = "#CTL_WebSearchAction"
 )
 @ActionReferences({
-    @ActionReference(path = "Menu/Tools", position = 100),
-    @ActionReference(path = "Shortcuts", name = "DO-F")
+    @ActionReference(path = "Menu/Tools", position = 99),
+    @ActionReference(path = "Shortcuts", name = "DO-F"), //    @ActionReference(path = "UI/ToolActions/Files", position = 2050)
 })
 @Messages("CTL_WebSearchAction=Web search...")
+/**
+ *
+ * @author Patrik Karlström <patrik@trixon.se>
+ */
 public final class WebSearchAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        System.out.println(LocalTime.now().toString());
+        //System.out.println(LocalTime.now().toString());
         var clipboad = Toolkit.getDefaultToolkit().getSystemClipboard();
 
         try {
@@ -63,7 +66,7 @@ public final class WebSearchAction implements ActionListener {
             try {
                 if (transferable.getTransferData(DataFlavor.stringFlavor) instanceof String searchString && searchString.length() > 0) {
                     try {
-                        var urlbase = "https://duckduckgo.com/?t=ffab&q=%s";
+                        var urlbase = Options.getInstance().getPreferences().get(Options.KEY_URL_1, Options.DEFAULT_URL_1);
                         var encodedSearchString = URLEncoder.encode(searchString.trim(), "utf-8");
                         var uri = new URI(urlbase.formatted(encodedSearchString));
                         HtmlBrowser.URLDisplayer.getDefault().showURL(uri.toURL());
