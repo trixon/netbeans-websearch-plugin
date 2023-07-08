@@ -25,12 +25,14 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
+import javax.swing.ImageIcon;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.Actions;
 import org.openide.awt.HtmlBrowser;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 
@@ -65,11 +67,19 @@ public final class WebSearchAction implements ActionListener {
 
             try {
                 if (transferable.getTransferData(DataFlavor.stringFlavor) instanceof String searchString && searchString.length() > 0) {
+                    var urlbase = Options.getInstance().getPreferences().get(Options.KEY_URL_1, Options.DEFAULT_URL_1);
                     try {
-                        var urlbase = Options.getInstance().getPreferences().get(Options.KEY_URL_1, Options.DEFAULT_URL_1);
                         var encodedSearchString = URLEncoder.encode(searchString.trim(), "utf-8");
                         var uri = new URI(urlbase.formatted(encodedSearchString));
                         HtmlBrowser.URLDisplayer.getDefault().showURL(uri.toURL());
+                    } catch (IllegalArgumentException ex) {
+                        NotificationDisplayer.getDefault().notify(
+                                "Invalid URL: " + urlbase,
+                                new ImageIcon(),
+                                "Check your settings in Tools/Options/Miscellaneous/Web search",
+                                null,
+                                NotificationDisplayer.Priority.HIGH
+                        );
                     } catch (MalformedURLException | URISyntaxException ex) {
                         Exceptions.printStackTrace(ex);
                     }
