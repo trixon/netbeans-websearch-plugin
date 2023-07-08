@@ -63,6 +63,12 @@ public final class WebSearchAction implements ActionListener {
             var originalTransferable = clipboad.getContents(null);
 
             Actions.forID("Edit", "org.openide.actions.CopyAction").actionPerformed(null);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+
             var transferable = clipboad.getContents(null);
 
             try {
