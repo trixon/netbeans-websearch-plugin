@@ -107,7 +107,7 @@
     </dependencies>
 
     <properties>
-        <netbeans.version>RELEASE180</netbeans.version>
+        <netbeans.version>RELEASE190</netbeans.version>
         <netbeans.hint.license>apache20</netbeans.hint.license>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
