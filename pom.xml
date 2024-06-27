@@ -63,7 +63,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>3.4.2</version>
                 <configuration>
                     <archive>
                         <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -73,7 +73,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.7.0</version>
             </plugin>
         </plugins>
     </build>
@@ -107,7 +107,7 @@
     </dependencies>
 
     <properties>
-        <netbeans.version>RELEASE210</netbeans.version>
+        <netbeans.version>RELEASE220</netbeans.version>
         <netbeans.hint.license>apache20</netbeans.hint.license>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
