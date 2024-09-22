@@ -54,10 +54,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
                     <showDeprecation>true</showDeprecation>
                     <debug>false</debug>
+                    <release>21</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -107,7 +106,7 @@
     </dependencies>
 
     <properties>
-        <netbeans.version>RELEASE220</netbeans.version>
+        <netbeans.version>RELEASE230</netbeans.version>
         <netbeans.hint.license>apache20</netbeans.hint.license>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
